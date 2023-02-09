@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router,
+    private authService: AuthService) { }
 
   miFormulario: FormGroup = this.fb.group({
     email: ["illika@email.com", [Validators.required, Validators.email]],
@@ -21,8 +23,9 @@ export class LoginComponent implements OnInit {
   }
 
   ingresar() {
-    console.log(this.miFormulario.value);
-    this.router.navigateByUrl("/dashboard");
+    const { email, password } = this.miFormulario.value;
+    this.authService.login(email, password).subscribe(console.log);
+    //this.router.navigateByUrl("/dashboard");
   }
 
 }
