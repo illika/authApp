@@ -27,7 +27,7 @@ export class AuthService {
       tap(resp => {
         if (resp.ok) {
           localStorage.setItem("token", resp.token!);
-          this._usuario = { name: resp.name!, uid: resp.uid! };
+          //this._usuario = { name: resp.name!, uid: resp.uid!, email };
         }
       }),
       map(resp => resp.ok),
@@ -44,7 +44,7 @@ export class AuthService {
       .pipe(
         map(resp => {
           localStorage.setItem("token", resp.token!);
-          this._usuario = { name: resp.name!, uid: resp.uid! };
+          this._usuario = { name: resp.name!, uid: resp.uid!, email: resp.email };
           return resp.ok;
         }),
         catchError(err => of(false))
@@ -53,5 +53,22 @@ export class AuthService {
 
   logout() {
     localStorage.clear();
+  }
+
+  registrarUsuario(usuario: Usuario) {
+    // email: string, name: string, password: string
+    const url = `${this.baseUrl}/auth/new`;
+    //const body = { email, name, password };
+
+    return this.http.post<AuthReponse>(url, usuario).pipe(
+      tap(resp => {
+        if (resp.ok) {
+          localStorage.setItem("token", resp.token!);
+          //this._usuario = { name: resp.name!, uid: resp.uid!, email: resp.email };
+        }
+      }),
+      map(resp => resp.ok),
+      catchError(err => of(err.error))
+    );
   }
 }
