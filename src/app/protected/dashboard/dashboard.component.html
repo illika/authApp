@@ -2,9 +2,9 @@
 <hr>
 
 <p>Autenticado</p>
-
 <div>
     <h2>User Info</h2>
+    <pre>{{ usuario | json }}</pre>
     <button (click)="logout()">
         Cerrar Sesión
     </button>

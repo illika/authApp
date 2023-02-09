@@ -5,3 +5,10 @@ export interface AuthReponse {
     token?: string;
     msg?: string;
 }
+
+
+export interface Usuario {
+    uid: string;
+    name: string;
+    email?: string;
+}

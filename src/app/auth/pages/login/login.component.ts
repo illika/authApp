@@ -24,8 +24,14 @@ export class LoginComponent implements OnInit {
 
   ingresar() {
     const { email, password } = this.miFormulario.value;
-    this.authService.login(email, password).subscribe(console.log);
-    //this.router.navigateByUrl("/dashboard");
+    this.authService.login(email, password).subscribe((resp) => {
+      if(resp) {
+        this.router.navigateByUrl("/dashboard");
+      } else {
+        console.log("Error al logear");        
+      }
+    });
+    //
   }
 
 }
